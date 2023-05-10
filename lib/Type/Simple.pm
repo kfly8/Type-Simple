@@ -1,11 +1,21 @@
 package Type::Simple;
-use 5.008001;
 use strict;
 use warnings;
 
 our $VERSION = "0.01";
 
+use Exporter qw(import);
 
+our @EXPORT_OK = qw(
+    type is_type
+
+    Int Any Undef
+    ArrayRef Tuple HashRef Dict Map
+);
+
+use Type::Simple::Util qw(type is_type);
+use Type::Simple::Types::Primitives qw(Int Any Undef);
+use Type::Simple::Types::Structures qw(ArrayRef Tuple HashRef Dict Map);
 
 1;
 __END__
@@ -18,7 +28,25 @@ Type::Simple - It's new $module
 
 =head1 SYNOPSIS
 
-    use Type::Simple;
+    use Type::Simple type => qw(Int Str Dict);
+
+    type ID => Int;
+
+    type User => Dict[
+        id => ID,
+        name => Str,
+    ];
+
+    ok User->check({ id => 1, name => "John" });
+    ok !User->check({ id => 1, name => "John", extra => 'extra' });
+
+    type Add => Fn [Int, Int] => Int;
+
+    type Hoge<$S, $T> => Dict[
+        s => $S,
+        t => $T,
+    ];
+
 
 =head1 DESCRIPTION
 
