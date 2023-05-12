@@ -24,7 +24,7 @@ __END__
 
 =head1 NAME
 
-Type::Simple - It's new $module
+Type::Simple - Minimalist type constraints with Moo(se)
 
 =head1 SYNOPSIS
 
@@ -33,24 +33,40 @@ Type::Simple - It's new $module
     type ID => Int;
 
     type User => Dict[
-        id => ID,
+        id   => ID,
         name => Str,
     ];
 
-    ok User->check({ id => 1, name => "John" });
-    ok !User->check({ id => 1, name => "John", extra => 'extra' });
-
-    type Add => Fn [Int, Int] => Int;
-
-    type Hoge<$S, $T> => Dict[
-        s => $S,
-        t => $T,
-    ];
-
+    my $user = { id => 1, name => "John" };
+    ok User->check($user);
 
 =head1 DESCRIPTION
 
-Type::Simple is ...
+Type::Simple is a type constraint module designed with five key objectives:
+
+=over
+
+=item B<Instant Start>
+
+Simple, so you can start using it in no time.
+
+=item B<Powerful Simplicity>
+
+Its simplicity belies its power. By combining built-in types and utilities, you can create potent type constraints. For instance, it has enabled the porting of GraphQL-JS.
+
+=item B<Broad Compatibility>
+
+Types defined using Type::Simple are compatible and can coexist with modules like Moo, Moose, Mouse, Function::Parameters, and Type::Params.
+
+=item B<Developer-Friendly>
+
+Provides clear and helpful feedback during type errors to enhance the developer's experience.
+
+=item B<Speed Matters>
+
+Leveraging XS modules, the built-in types work faster, because faster is always better.
+
+=back
 
 =head1 LICENSE
 

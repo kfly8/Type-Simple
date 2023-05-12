@@ -1,5 +1,5 @@
 {
-   "abstract" : "It's new $module",
+   "abstract" : "Minimalist type constraints with Moo(se)",
    "author" : [
       "kobaken <kentafly88@gmail.com>"
    ],
@@ -42,7 +42,8 @@
       },
       "runtime" : {
          "requires" : {
-            "perl" : "5.008001"
+            "List::Util" : "1.33",
+            "perl" : "5.0016003"
          }
       },
       "test" : {
@@ -52,6 +53,17 @@
       }
    },
    "release_status" : "unstable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/kfly8/Type-Simple/issues"
+      },
+      "homepage" : "https://github.com/kfly8/Type-Simple",
+      "repository" : {
+         "type" : "git",
+         "url" : "https://github.com/kfly8/Type-Simple.git",
+         "web" : "https://github.com/kfly8/Type-Simple"
+      }
+   },
    "version" : "0.01",
    "x_serialization_backend" : "JSON::PP version 4.07",
    "x_static_install" : 1
