@@ -1,21 +1,23 @@
-[![Actions Status](https://github.com/kfly8/Type-Simple/actions/workflows/test.yml/badge.svg)](https://github.com/kfly8/Type-Simple/actions)
+[![Actions Status](https://github.com/kfly8/Type-Simple/actions/workflows/test.yml/badge.svg)](https://github.com/kfly8/Type-Simple/actions) [![MetaCPAN Release](https://badge.fury.io/pl/Type-Simple.svg)](https://metacpan.org/release/Type-Simple)
 # NAME
 
 Type::Simple - Minimalist type constraints with Moo(se)
 
 # SYNOPSIS
 
-    use Type::Simple type => qw(Int Str Dict);
+```perl
+use Type::Simple type => qw(Int Str Dict);
 
-    type ID => Int;
+type ID => Int;
 
-    type User => Dict[
-        id   => ID,
-        name => Str,
-    ];
+type User => Dict[
+    id   => ID,
+    name => Str,
+];
 
-    my $user = { id => 1, name => "John" };
-    ok User->check($user);
+my $user = { id => 1, name => "John" };
+ok User->check($user);
+```
 
 # DESCRIPTION
 
