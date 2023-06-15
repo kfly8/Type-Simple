@@ -13,7 +13,7 @@ our @EXPORT_OK = qw(
     ArrayRef Tuple HashRef Dict Map
 );
 
-use Type::Simple::Util qw(type is_type);
+use Type::Simple::Util qw(is_type);
 use Type::Simple::Types::Primitives qw(Int Any Undef);
 use Type::Simple::Types::Structures qw(ArrayRef Tuple HashRef Dict Map);
 

@@ -1,18 +1,61 @@
 package Type::Simple::Util;
 use strict;
 use warnings;
+use feature qw(current_sub);
 
 use Exporter qw(import);
 
-our @EXPORT_OK = qw(type is_type);
+our @EXPORT_OK = qw(is_type);
 
 use Scalar::Util qw(blessed);
-
-sub type { die 'Not implemented yet' }
+use Carp qw(croak);
 
 sub is_type {
     my ($type) = @_;
     blessed($type) && $type->can('check') && $type->can('get_message');
+}
+
+sub to_type_coderef {
+    my ($code) = @_;
+    unless (ref $code && ref $code eq 'CODE') {
+        croak 'type() requires a code reference';
+    }
+
+    return sub {
+        my @types = @_ ? map { to_type($_) } @{$_[0]} : ();
+        to_type($code->(@types));
+    };
+}
+
+sub to_type {
+    my ($v) = @_;
+
+    if (blessed($v) &&  $v->isa('Type::Simple::Constraint')) {
+        return $v;
+    }
+    elsif (ref $v) {
+        no warnings qw(once);
+        require Type::Simple::Types::Structures;
+
+        if (ref $v eq 'ARRAY' && @$v == 1) {
+            return Type::Simple::Types::Structures::ArrayRef[__SUB__->($v->[0])];
+        }
+        elsif (ref $v eq 'ARRAY') {
+            return Type::Simple::Types::Structures::Tuple[map { __SUB__->($_) } @$v];
+        }
+        elsif (ref $v eq 'HASH') {
+            return Type::Simple::Types::Structures::Dict[map { $_ => __SUB__->($v->{$_}) } sort { $a cmp $b } keys %$v];
+        }
+        elsif (ref $v eq 'CODE') {
+            return to_type($v->());
+        }
+        else {
+            ...
+        }
+    }
+    else {
+        ...
+    }
 }
 
 sub is_string {
