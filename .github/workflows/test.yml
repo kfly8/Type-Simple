@@ -3,6 +3,11 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      PERL_USE_UNSAFE_INC: 0
+      AUTHOR_TESTING: 1
+      AUTOMATED_TESTING: 1
+      RELEASE_TESTING: 1
     strategy:
       matrix:
         perl:
@@ -22,12 +27,15 @@ jobs:
     name: Perl ${{ matrix.perl }}
     steps:
       - uses: actions/checkout@v3
-      - name: Setup perl
-        uses: shogo82148/actions-setup-perl@v1
+      - name: perl -V
+        run: perl -V
+      - name: install dependencies
+        uses: perl-actions/install-with-cpm@stable
         with:
-          perl-version: ${{ matrix.perl }}
-      - name: Install dependencies
-        run: cpanm -nq --installdeps --with-develop --with-recommends .
-      - name: Run test
-        run: prove -lr t
+          cpanfile: cpanfile
+          args: "--no-test --with-configure --with-develop --with-suggests"
+      - name: Build.PL
+        run: perl Build.PL
+      - run: ./Build
+      - run: ./Build test
 
