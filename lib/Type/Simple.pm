@@ -4,18 +4,42 @@ use warnings;
 
 our $VERSION = "0.01";
 
-use Exporter qw(import);
+use parent qw(Exporter);
+
+use XSLoader;
+XSLoader::load(__PACKAGE__, $VERSION);
 
 our @EXPORT_OK = qw(
-    type is_type
+    is_type
 
     Int Any Undef
     ArrayRef Tuple HashRef Dict Map
 );
 
-use Type::Simple::Util qw(is_type);
+use Carp qw(croak);
+use Type::Simple::Util qw(is_type eval_type to_type to_type_coderef);
 use Type::Simple::Types::Primitives qw(Int Any Undef);
 use Type::Simple::Types::Structures qw(ArrayRef Tuple HashRef Dict Map);
+
+sub import {
+    my ($class) = @_;
+    $class->export_to_level(1, @_);
+
+    my $caller = caller;
+    $class->import_into($caller);
+}
+
+sub import_into {
+    my $class = shift;
+    my $caller = shift;
+
+    my @syms = qw( type );
+
+    my %syms = map { $_ => 1 } @syms;
+    delete $syms{$_} and $^H{"Type::Simple/$_"}++ for @syms;
+
+    croak "Unrecognised import symbols @{[ keys %syms ]}" if keys %syms;
+}
 
 1;
 __END__
