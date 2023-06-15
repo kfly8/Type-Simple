@@ -9,27 +9,27 @@ our @EXPORT_OK = qw(
     HashRef Dict Map
 );
 
-sub ArrayRef {
+sub ArrayRef(;$) {
     require Type::Simple::Constraint::Structure::ArrayRef;
     Type::Simple::Constraint::Structure::ArrayRef->new( parameters => $_[0] ? $_[0] : [] );
 }
 
-sub Tuple {
+sub Tuple(;$) {
     require Type::Simple::Constraint::Structure::Tuple;
     Type::Simple::Constraint::Structure::Tuple->new( parameters => $_[0] );
 }
 
-sub HashRef {
+sub HashRef(;$) {
     require Type::Simple::Constraint::Structure::HashRef;
     Type::Simple::Constraint::Structure::HashRef->new( parameters => $_[0] ? $_[0] : [] );
 }
 
-sub Dict {
+sub Dict(;$) {
     require Type::Simple::Constraint::Structure::Dict;
     Type::Simple::Constraint::Structure::Dict->new( parameters => $_[0] );
 }
 
-sub Map {
+sub Map(;$) {
     require Type::Simple::Constraint::Structure::Map;
     Type::Simple::Constraint::Structure::Map->new( parameters => $_[0] );
 }
