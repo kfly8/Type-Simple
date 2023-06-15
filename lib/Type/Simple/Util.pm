@@ -5,7 +5,7 @@ use feature qw(current_sub);
 
 use Exporter qw(import);
 
-our @EXPORT_OK = qw(is_type);
+our @EXPORT_OK = qw(is_type eval_type to_type to_type_coderef);
 
 use Scalar::Util qw(blessed);
 use Carp qw(croak);
@@ -56,6 +56,24 @@ sub to_type {
     else {
         ...
     }
+}
+
+sub eval_type {
+    my ($type_string) = @_;
+
+    my $package_name = caller(1);
+
+    local $@;
+    my $code = eval sprintf('package %s {
+        Type::Simple::type(sub { %s });
+    }', $package_name, $type_string);
+
+    if ($@) {
+        chomp($@);
+        croak $@;
+    }
+
+    return $code;
 }
 
 sub is_string {
