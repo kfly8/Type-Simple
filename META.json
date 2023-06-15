@@ -17,18 +17,20 @@
       "directory" : [
          "t",
          "xt",
-         "inc",
-         "share",
-         "eg",
-         "examples",
+         "tool",
          "author",
+         "example",
+         "benchmarks",
          "builder"
       ]
    },
    "prereqs" : {
       "configure" : {
          "requires" : {
-            "Module::Build::Tiny" : "0.035"
+            "Devel::PPPort" : "3.68",
+            "Module::Build" : "0.4005",
+            "Module::Build::XSUtil" : "0.19",
+            "XS::Parse::Keyword::Builder" : "0.33"
          }
       },
       "develop" : {
@@ -67,5 +69,5 @@
    "version" : "0.01",
    "x_authority" : "cpan:KFLY",
    "x_serialization_backend" : "JSON::PP version 4.07",
-   "x_static_install" : 1
+   "x_static_install" : 0
 }

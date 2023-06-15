@@ -29,3 +29,7 @@ cover_db/
 MYMETA.*
 
 /Type-Simple-*
+lib/Type/Simple.c
+XSParseKeyword.h
+XSParseSublike.h
+ppport.h

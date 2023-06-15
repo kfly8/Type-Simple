@@ -2,9 +2,15 @@ name = "Type-Simple"
 badges = ["github-actions/test.yml", "metacpan"]
 authority="cpan:KFLY"
 
-module_maker="ModuleBuildTiny"
+module_maker="ModuleBuild"
 static_install = "auto"
 markdown_maker = "Pod::Markdown::Github"
 
 [release]
 branch='main'
+
+[build]
+build_class = "builder::MyBuilder"
+
+[no_index]
+directory = ["t", "xt", "tool", "author", "example", "benchmarks", "builder"]
